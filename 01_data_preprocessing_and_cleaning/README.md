@@ -40,18 +40,18 @@ Compresses extreme positive tails, restoring normality for linear models that as
 
 ## 📂 Notebook Implementations
 
-### 1. `01_ecommerce_sales_preprocessing.ipynb`
+### 1. `Ecommerce_Cleaning.ipynb`
 * **Workflow:** Ingests retail transaction records $\to$ identifies zero and negative values in `Sales` and `Discount` $\to$ imputes missing numerical columns using median values $\to$ caps extreme values with $1.5 \times \text{IQR}$ rule $\to$ visualizes before/after distributions.
-* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/01_ecommerce_sales_preprocessing.ipynb)
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/Ecommerce_Cleaning.ipynb)
 
-### 2. `02_healthcare_patient_records.ipynb`
+### 2. `Patient_Records.ipynb`
 * **Workflow:** Audits patient records for missing laboratory values $\to$ fills categorical missing fields with mode $\to$ converts nominal variables (`Gender`, `Smoker`, `Diagnosis`) into dummy variables via `pd.get_dummies()` $\to$ rescales physiological metrics (`BP`, `Cholesterol`) using `StandardScaler`.
-* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/02_healthcare_patient_records.ipynb)
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/Patient_Records.ipynb)
 
-### 3. `03_housing_feature_transformations.ipynb`
+### 3. `Housing_Transform.ipynb`
 * **Workflow:** Analyzes real estate sales $\to$ computes skewness coefficients on `SalePrice` $\to$ applies $\log_e(x)$ transformation $\to$ creates interaction features between square footage and room count $\to$ verifies zero multicollinearity with correlation heatmaps.
-* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/03_housing_feature_transformations.ipynb)
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/Housing_Transform.ipynb)
 
-### 4. `04_banking_customer_normalization.ipynb`
+### 4. `Bank_Marketing.ipynb`
 * **Workflow:** Loads customer campaign marketing data (`marketing_campaign.csv`) $\to$ computes current age from `Year_Birth` $\to$ analyzes distribution of `Income` via boxplots $\to$ visualizes customer spending patterns (`Income` vs `MntWines`) via scatter plots $\to$ isolates high-net-worth customer segments.
-* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/04_banking_customer_normalization.ipynb)
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/Bank_Marketing.ipynb)

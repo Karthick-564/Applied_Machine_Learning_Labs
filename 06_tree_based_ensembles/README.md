@@ -20,29 +20,29 @@ Ensemble Family ┤
 
 ## 🧪 Experiments Overview
 
-### 1. `01_bagging_ensemble_diabetes.ipynb`
+### 1. `Bagging_Diabetes.ipynb`
 * **Dataset:** Pima Indians Diabetes (`diabetes_bagging.csv`).
 * **Core Comparison:** Single unconstrained Decision Tree vs. **BaggingClassifier** (10 parallel bootstrap estimators).
 * **Finding:** Bagging reduced test variance significantly, boosting classification accuracy by over **$5.2\%$**.
 
-### 2. `02_adaboost_and_gradient_boosting_churn.ipynb`
+### 2. `Boosting_Churn.ipynb`
 * **Dataset:** Telco Customer Churn (`churn_boosting.csv`).
 * **Core Comparison:** **AdaBoost** (exponential loss reweighting) vs. **Gradient Boosting** (gradient descent on negative binomial deviance).
 * **Diagnostics:** Full **ROC Curve overlay with AUC scores** and Gradient Boosting relative feature importance ranking.
 
-### 3. `03_random_forest_income_prediction.ipynb`
+### 3. `Random_Forest_Income.ipynb`
 * **Dataset:** Adult Census Income (`income_random_forest.csv`).
 * **Architecture:** `RandomForestClassifier` with randomized feature subsampling ($m = \sqrt{p}$).
 * **Diagnostics:** Accuracy progression curve plotted as a function of forest size ($B \in [10, 200]$ trees) and Gini impurity feature importance bar plot.
 
-### 4. `04_stacking_classifier_heart_disease.ipynb`
+### 4. `Stacking_Heart.ipynb`
 * **Dataset:** Clinical Heart Disease (`heart_stacking.csv`).
 * **Architecture:** Multi-tier stacking ensemble:
   * *Base Tier:* Logistic Regression, Support Vector Machine, and Decision Tree.
   * *Meta Tier:* Logistic Regression meta-learner trained on out-of-fold probability vectors.
 * **Finding:** Stacking successfully combined the linear precision of Logistic Regression with the non-linear flexibility of SVM and Trees.
 
-### 5. `05_smote_class_imbalance_fraud.ipynb`
+### 5. `SMOTE_Fraud.ipynb`
 * **Dataset:** Credit Card Transaction Fraud (`fraud_smote.csv`).
 * **Challenge:** Extreme class imbalance (fraudulent transactions represent $< 1\%$ of observations).
 * **Remedy:** **SMOTE (Synthetic Minority Over-sampling Technique)** interpolates synthetic samples along $k$-nearest neighbor feature line segments.
@@ -63,13 +63,13 @@ Ensemble Family ┤
 ---
 
 ## 📂 Notebook Implementations
-* `01_bagging_ensemble_diabetes.ipynb`
-  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/01_bagging_ensemble_diabetes.ipynb)
-* `02_adaboost_and_gradient_boosting_churn.ipynb`
-  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/02_adaboost_and_gradient_boosting_churn.ipynb)
-* `03_random_forest_income_prediction.ipynb`
-  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/03_random_forest_income_prediction.ipynb)
-* `04_stacking_classifier_heart_disease.ipynb`
-  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/04_stacking_classifier_heart_disease.ipynb)
-* `05_smote_class_imbalance_fraud.ipynb`
-  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/05_smote_class_imbalance_fraud.ipynb)
+* `Bagging_Diabetes.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/Bagging_Diabetes.ipynb)
+* `Boosting_Churn.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/Boosting_Churn.ipynb)
+* `Random_Forest_Income.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/Random_Forest_Income.ipynb)
+* `Stacking_Heart.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/Stacking_Heart.ipynb)
+* `SMOTE_Fraud.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/SMOTE_Fraud.ipynb)

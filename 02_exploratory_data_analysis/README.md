@@ -21,10 +21,10 @@
 * **Financial Context:** Daily trading data of Life Insurance Corporation of India (LICI) equity stock.
 * **Objective:** Predict whether next-day closing price will experience a positive or negative price movement based on intraday technical indicators (Open, High, Low, Volume, Daily Return).
 * **Methodology:**
-  * Target synthesis: Binary indicator $y_t = \mathbb{I}(	ext{Close}_{t+1} > 	ext{Close}_t)$.
+  * Target synthesis: Binary indicator $y_t = \mathbb{I}(\text{Close}_{t+1} > \text{Close}_t)$.
   * Feature normalization using `StandardScaler`.
   * Fitting **Logistic Regression** classifier with sigmoid link function:
-    $$P(y = 1 \mid \mathbf{x}) = rac{1}{1 + e^{-\mathbf{w}^T \mathbf{x} - b}}$$
+    $$P(y = 1 \mid \mathbf{x}) = \frac{1}{1 + e^{-\mathbf{w}^T \mathbf{x} - b}}$$
   * Comprehensive diagnostic validation: Confusion Matrix, ROC-AUC curve, and L2 hyperparameter tuning.
 
 ---
@@ -39,7 +39,7 @@
 ---
 
 ## 📂 Notebook Implementations
-* `01_oceanographic_temperature_regression.ipynb`: Merging CalCOFI ocean datasets, OLS regression, residual plots, and Ridge/Lasso shrinkage.
-  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/02_exploratory_data_analysis/01_oceanographic_temperature_regression.ipynb)
-* `02_stock_movement_logistic_classification.ipynb`: Market direction classification, ROC-AUC curve plotting, confusion matrix, and coefficient importance.
-  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/02_exploratory_data_analysis/02_stock_movement_logistic_classification.ipynb)
+* `Ocean_Regression.ipynb`: Merging CalCOFI ocean datasets, OLS regression, residual plots, and Ridge/Lasso shrinkage.
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/02_exploratory_data_analysis/Ocean_Regression.ipynb)
+* `Stock_Classification.ipynb`: Market direction classification, ROC-AUC curve plotting, confusion matrix, and coefficient importance.
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/02_exploratory_data_analysis/Stock_Classification.ipynb)
