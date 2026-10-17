@@ -1,35 +1,57 @@
 # 01 · Data Preprocessing & Cleaning Pipelines
 
-> **Core Focus:** End-to-end data sanitation, missing value handling, categorical encoding, feature scaling, and anomaly detection across four real-world business scenarios.
+> **Core Focus:** Production-grade data sanitation, missing value handling, categorical encoding, feature scaling, and anomaly detection across four real-world commercial and clinical domains.
 
 ---
 
-## 🔬 Scenario Overview & Data Engineering
+## 🔬 Domain Scenarios & Data Engineering
 
-| Scenario | Domain | Challenges Addressed | Core Techniques |
-| :--- | :--- | :--- | :--- |
-| **01 · E-Commerce Sales** | Retail Analytics | Missing price/quantity values, extreme transaction outliers | Median imputation, IQR clipping, MinMax normalization |
-| **02 · Healthcare Records** | Clinical Patient Logs | High-dimensional nulls, dirty demographic text | Mode/Iterative imputation, One-Hot Encoding, domain constraints |
-| **03 · Housing Transactions**| Real Estate | Skewed property values, high-cardinality zip codes | Log transformation $\log(1 + x)$, Target encoding, RobustScaler |
-| **04 · Banking Customers** | Financial Risk | Unformatted timestamps, mixed currency scales | Epoch/cyclical datetime extraction, Z-score standardisation |
+```
+Raw Data Ingestion ───► Anomaly / Null Detection ───► Statistical Imputation ───► Feature Encoding ───► Standardized Output
+```
+
+| Scenario | Domain & Dataset | Source Challenges | Applied Transformations | Key Target / Feature Focus |
+| :--- | :--- | :--- | :--- | :--- |
+| **01 · E-Commerce** | Superstore Sales Transactions | Negative prices, missing sales, invalid order IDs | Median imputation, IQR outlier trimming, MinMax scaling | Sales, Profit, Discount, Quantity |
+| **02 · Healthcare** | Clinical Inpatient Records | High-dimensional nulls, dirty demographic text | Mode/Iterative imputation, One-Hot Encoding, StandardScaler | Age, Blood Pressure, Diagnosis Category |
+| **03 · Housing** | Real Estate Market Valuations | Highly skewed prices, non-linear spatial attributes | Log transformation $\log(1 + x)$, Target encoding, RobustScaler | SalePrice, Square Footage, ZipCode |
+| **04 · Banking** | `marketing_campaign.csv` | Mixed formats, birth years instead of ages | Cyclical datetime parsing, Age extraction, Income outlier capping | Age, Income, Wine & Meat Spending |
 
 ---
 
-## 📐 Mathematical Foundations
+## 📐 Mathematical Formulations
 
-### 1. Robust Z-Score Normalization
-$$z = \frac{x - \mu}{\sigma}, \quad z_{\text{robust}} = \frac{x - \text{median}}{\text{IQR}}$$
+### 1. Tukey's Interquartile Range (IQR) Outlier Capping
+$$\text{IQR} = Q_3 - Q_1$$
+$$\text{Valid Domain} = [Q_1 - 1.5 \times \text{IQR}, \; Q_3 + 1.5 \times \text{IQR}]$$
+Any data point $x_i$ outside this interval is flagged as an anomaly and capped to prevent gradient distortion in subsequent downstream estimators.
 
-### 2. Min-Max Rescaling to $[0, 1]$
-$$x_{\text{scaled}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}$$
+### 2. Feature Standardization vs. Min-Max Rescaling
+* **Z-Score Normalization:**
+  $$z = \frac{x - \mu}{\sigma}, \quad \mu = \frac{1}{N}\sum x_i, \quad \sigma = \sqrt{\frac{1}{N}\sum(x_i - \mu)^2}$$
+* **Min-Max Normalization (Bounded in $[0, 1]$):**
+  $$x_{\text{scaled}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}$$
 
-### 3. Logarithmic De-Skewing
-$$y = \log(1 + x), \quad \text{reduces positive skewness in long-tailed financial variables.}$$
+### 3. Logarithmic De-Skewing for Right-Skewed Distributions
+$$y = \log(1 + x)$$
+Compresses extreme positive tails, restoring normality for linear models that assume homoscedasticity.
 
 ---
 
 ## 📂 Notebook Implementations
-* `01_ecommerce_sales_preprocessing.ipynb`: Transaction cleaning & purchase anomaly detection.
-* `02_healthcare_patient_records.ipynb`: Patient demographic & diagnostic record sanitation.
-* `03_housing_feature_transformations.ipynb`: Spatial and numeric feature engineering for valuation.
-* `04_banking_customer_normalization.ipynb`: Temporal parsing and customer risk profile standardization.
+
+### 1. `01_ecommerce_sales_preprocessing.ipynb`
+* **Workflow:** Ingests retail transaction records $\to$ identifies zero and negative values in `Sales` and `Discount` $\to$ imputes missing numerical columns using median values $\to$ caps extreme values with $1.5 \times \text{IQR}$ rule $\to$ visualizes before/after distributions.
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/01_ecommerce_sales_preprocessing.ipynb)
+
+### 2. `02_healthcare_patient_records.ipynb`
+* **Workflow:** Audits patient records for missing laboratory values $\to$ fills categorical missing fields with mode $\to$ converts nominal variables (`Gender`, `Smoker`, `Diagnosis`) into dummy variables via `pd.get_dummies()` $\to$ rescales physiological metrics (`BP`, `Cholesterol`) using `StandardScaler`.
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/02_healthcare_patient_records.ipynb)
+
+### 3. `03_housing_feature_transformations.ipynb`
+* **Workflow:** Analyzes real estate sales $\to$ computes skewness coefficients on `SalePrice` $\to$ applies $\log_e(x)$ transformation $\to$ creates interaction features between square footage and room count $\to$ verifies zero multicollinearity with correlation heatmaps.
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/03_housing_feature_transformations.ipynb)
+
+### 4. `04_banking_customer_normalization.ipynb`
+* **Workflow:** Loads customer campaign marketing data (`marketing_campaign.csv`) $\to$ computes current age from `Year_Birth` $\to$ analyzes distribution of `Income` via boxplots $\to$ visualizes customer spending patterns (`Income` vs `MntWines`) via scatter plots $\to$ isolates high-net-worth customer segments.
+* [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/01_data_preprocessing_and_cleaning/04_banking_customer_normalization.ipynb)

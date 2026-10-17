@@ -1,23 +1,75 @@
-# 06 · Tree-Based Models & Ensemble Architecture
+# 06 · Ensemble Learning & Class Imbalance Architectures
 
-> **Core Focus:** Recursive binary splitting, impurity measures (Gini & Entropy), cost-complexity pruning, Random Forests, and AdaBoost / Gradient Boosting.
+> **Core Focus:** Advanced ensemble paradigms including Bagging, Boosting (AdaBoost vs. Gradient Boosting), Random Forests, Multi-Tier Stacking, and handling severe class imbalance using SMOTE oversampling.
 
 ---
 
-## 🌲 Splitting Criteria & Impurity
+## 🌲 Ensemble Paradigms Compared
 
-### Gini Impurity & Shannon Entropy
-$$I_G(p) = 1 - \sum_{k=1}^K p_k^2, \quad H(p) = -\sum_{k=1}^K p_k \log_2(p_k)$$
+```
+                ┌─── Bagging (Bootstrap Aggregation) ──► Parallel trees trained on random subsets (Variance Reduction)
+                │
+                ├─── Boosting (Sequential Learning) ────► Weak learners fit to pseudo-residuals (Bias Reduction)
+Ensemble Family ┤
+                ├─── Stacking (Meta-Learning) ──────────► Diverse base models blended via a meta-classifier
+                │
+                └─── Resampling (SMOTE) ────────────────► Synthetic minority vector synthesis for skewed distributions
+```
 
-### Random Forest Variance Reduction
-Averages $B$ de-correlated trees trained on bootstrap samples with random feature subsets $m \approx \sqrt{p}$:
-$$\text{Var}(\bar{X}) = \rho \sigma^2 + \frac{1 - \rho}{B} \sigma^2$$
+---
+
+## 🧪 Experiments Overview
+
+### 1. `01_bagging_ensemble_diabetes.ipynb`
+* **Dataset:** Pima Indians Diabetes (`diabetes_bagging.csv`).
+* **Core Comparison:** Single unconstrained Decision Tree vs. **BaggingClassifier** (10 parallel bootstrap estimators).
+* **Finding:** Bagging reduced test variance significantly, boosting classification accuracy by over **$5.2\%$**.
+
+### 2. `02_adaboost_and_gradient_boosting_churn.ipynb`
+* **Dataset:** Telco Customer Churn (`churn_boosting.csv`).
+* **Core Comparison:** **AdaBoost** (exponential loss reweighting) vs. **Gradient Boosting** (gradient descent on negative binomial deviance).
+* **Diagnostics:** Full **ROC Curve overlay with AUC scores** and Gradient Boosting relative feature importance ranking.
+
+### 3. `03_random_forest_income_prediction.ipynb`
+* **Dataset:** Adult Census Income (`income_random_forest.csv`).
+* **Architecture:** `RandomForestClassifier` with randomized feature subsampling ($m = \sqrt{p}$).
+* **Diagnostics:** Accuracy progression curve plotted as a function of forest size ($B \in [10, 200]$ trees) and Gini impurity feature importance bar plot.
+
+### 4. `04_stacking_classifier_heart_disease.ipynb`
+* **Dataset:** Clinical Heart Disease (`heart_stacking.csv`).
+* **Architecture:** Multi-tier stacking ensemble:
+  * *Base Tier:* Logistic Regression, Support Vector Machine, and Decision Tree.
+  * *Meta Tier:* Logistic Regression meta-learner trained on out-of-fold probability vectors.
+* **Finding:** Stacking successfully combined the linear precision of Logistic Regression with the non-linear flexibility of SVM and Trees.
+
+### 5. `05_smote_class_imbalance_fraud.ipynb`
+* **Dataset:** Credit Card Transaction Fraud (`fraud_smote.csv`).
+* **Challenge:** Extreme class imbalance (fraudulent transactions represent $< 1\%$ of observations).
+* **Remedy:** **SMOTE (Synthetic Minority Over-sampling Technique)** interpolates synthetic samples along $k$-nearest neighbor feature line segments.
+* **Diagnostics:** Before vs. After class count distribution charts, Confusion Matrix, and **Precision-Recall Curve** analysis.
+
+---
+
+## 📊 Benchmark Summary
+
+| Experiment | Dataset | Primary Paradigm | Baseline Score | Ensemble Score | Primary Metric |
+| :--- | :--- | :--- | :---: | :---: | :--- |
+| **01 · Bagging** | Diabetes | Bagging vs Single Tree | $71.4\%$ | **$77.9\%$** | Accuracy |
+| **02 · Boosting** | Customer Churn | AdaBoost vs Gradient Boosting | $0.81$ AUC | **$0.86$ AUC** | ROC-AUC |
+| **03 · Random Forest**| Census Income | Forest Size Scaling | $79.2\%$ (10 trees)| **$85.4\%$ (150 trees)**| Accuracy |
+| **04 · Stacking** | Heart Disease | Blended Heterogeneous Meta-Model| $81.1\%$ (best single)| **$84.6\%$ (Stacked)** | Accuracy |
+| **05 · SMOTE** | Credit Fraud | Minority Synthetic Oversampling | $0.34$ Recall | **$0.88$ Recall** | Minority $F_1$ / PR-AUC |
 
 ---
 
 ## 📂 Notebook Implementations
-* `01_decision_trees_and_pruning.ipynb`: Recursive tree generation and pre/post-pruning via `max_depth` and `ccp_alpha`.
-* `02_logistic_regression_baseline.ipynb`: Linear probabilistic baseline benchmark.
-* `03_random_forests_feature_importance.ipynb`: Bagging ensemble implementation and Mean Decrease in Impurity (MDI) feature ranking.
-* `04_ensemble_voting_and_bagging.ipynb`: Soft vs. hard voting aggregation across diverse base learners.
-* `05_model_comparative_benchmark.ipynb`: Head-to-head ROC-AUC, Precision, Recall, and $F_1$ evaluation across all model variants.
+* `01_bagging_ensemble_diabetes.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/01_bagging_ensemble_diabetes.ipynb)
+* `02_adaboost_and_gradient_boosting_churn.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/02_adaboost_and_gradient_boosting_churn.ipynb)
+* `03_random_forest_income_prediction.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/03_random_forest_income_prediction.ipynb)
+* `04_stacking_classifier_heart_disease.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/04_stacking_classifier_heart_disease.ipynb)
+* `05_smote_class_imbalance_fraud.ipynb`
+  * [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Karthick-564/applied-machine-learning-labs/blob/main/06_tree_based_ensembles/05_smote_class_imbalance_fraud.ipynb)
